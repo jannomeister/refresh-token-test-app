@@ -1,9 +1,17 @@
 <style></style>
 
 <div class="container">
-  <h1>Request</h1>
+  <h1>Login</h1>
 
-  <button type="button" (click)="onRequest()">
-    Click here to make a request
-  </button>
+  <div>
+    <button type="button" (click)="onLogin()">Login</button>
+  </div>
+
+  <div *ngIf="isLoggedIn">
+    <button type="button" (click)="me()">get user info</button>
+  </div>
+
+  <div style="margin-top: 3rem">
+    <pre>{{ user }}</pre>
+  </div>
 </div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
+import { TokenService } from './core/token.service';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +8,30 @@ import { AppService } from './app.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'refresh-token-test-app';
+  isLoggedIn = false;
+  user: string;
 
-  constructor(private appService: AppService) {}
+  constructor(
+    private appService: AppService,
+    private tokenService: TokenService
+  ) {}
 
-  async onRequest() {
-    const todo = await this.appService.fetchTodo();
+  async onLogin() {
+    const data = {
+      email: '', // your email address here...
+      password: '', // your password here...
+    };
 
-    console.log('todo: ', todo);
+    const result = await this.appService.login(data);
+
+    this.tokenService.storeToken(result.access_token);
+
+    this.isLoggedIn = true;
+  }
+
+  async me() {
+    const result = await this.appService.me();
+
+    this.user = JSON.stringify(result);
   }
 }

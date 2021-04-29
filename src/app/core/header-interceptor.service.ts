@@ -104,16 +104,18 @@ export class HeaderInterceptorService implements HttpInterceptor {
     const url = 'http://localhost:3000/api/user/token/refresh';
 
     return this.http.post(url, {}, { withCredentials: true }).pipe(
-      tap((newToken: { accessToken: string }) => {
-        this.tokenService.storeToken(newToken.accessToken);
+      tap((newToken: { access_token: string }) => {
+        this.tokenService.storeToken(newToken.access_token);
       }),
-      switchMap((newToken: { accessToken: string }) => {
+      switchMap((newToken: { access_token: string }) => {
         this.isRefreshing = false;
-        this.refreshTokenSubject.next(newToken.accessToken);
+        this.refreshTokenSubject.next(newToken.access_token);
+
+        this.tokenService.storeToken(newToken.access_token);
 
         const newReq = request.clone({
           setHeaders: {
-            Authorization: `Bearer ${newToken.accessToken}`,
+            Authorization: `Bearer ${newToken.access_token}`,
           },
         });
 
