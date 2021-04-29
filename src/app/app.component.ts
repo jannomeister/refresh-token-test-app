@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'refresh-token-test-app';
 
-  onRequest() {
-    console.log('hello');
+  constructor(private appService: AppService) {}
+
+  async onRequest() {
+    const todo = await this.appService.fetchTodo();
+
+    console.log('todo: ', todo);
   }
 }
