@@ -14,19 +14,35 @@ export class AppComponent {
   constructor(
     private appService: AppService,
     private tokenService: TokenService
-  ) {}
+  ) {
+    const token = this.tokenService.getToken();
+
+    this.isLoggedIn = !!token;
+  }
 
   async onLogin() {
-    const data = {
-      email: '', // your email address here...
-      password: '', // your password here...
-    };
+    try {
+      const data = {
+        email: 'jannodejesus4@gmail.com', // your email address here...
+        password: 'Demo@2016', // your password here...
+      };
 
-    const result = await this.appService.login(data);
+      const result = await this.appService.login(data);
 
-    this.tokenService.storeToken(result.access_token);
+      this.tokenService.storeToken(result.access_token);
 
-    this.isLoggedIn = true;
+      this.isLoggedIn = true;
+    } catch (err) {
+      window.alert('Invalid username/password');
+    }
+  }
+
+  async onLogout() {
+    await this.appService.logout();
+
+    this.tokenService.removeToken();
+
+    this.isLoggedIn = false;
   }
 
   async me() {

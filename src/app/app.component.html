@@ -3,15 +3,17 @@
 <div class="container">
   <h1>Login</h1>
 
-  <div>
+  <div *ngIf="!isLoggedIn">
     <button type="button" (click)="onLogin()">Login</button>
   </div>
 
   <div *ngIf="isLoggedIn">
     <button type="button" (click)="me()">get user info</button>
-  </div>
+    &nbsp;
+    <button type="button" (click)="onLogout()">Logout</button>
 
-  <div style="margin-top: 3rem">
-    <pre>{{ user }}</pre>
+    <div style="margin-top: 3rem">
+      <pre>{{ user }}</pre>
+    </div>
   </div>
 </div>

@@ -13,6 +13,12 @@ export class AppService {
       .toPromise();
   }
 
+  async logout(): Promise<any> {
+    return this.http
+      .post(`${this.baseUrl}/user/logout`, {}, { withCredentials: true })
+      .toPromise();
+  }
+
   async me() {
     return this.http.get(`${this.baseUrl}/user`).toPromise();
   }

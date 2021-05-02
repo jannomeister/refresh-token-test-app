@@ -7,11 +7,11 @@ export class TokenService {
   constructor() {}
 
   storeToken(token: string): void {
-    localStorage.setItem('accessToken', token);
+    localStorage.setItem('access_token', token);
   }
 
   getToken(): string {
-    return localStorage.getItem('accessToken');
+    return localStorage.getItem('access_token');
   }
 
   removeToken(): void {
